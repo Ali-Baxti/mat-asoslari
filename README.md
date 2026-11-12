@@ -50,3 +50,11 @@ Benchmark 10 ta namunaviy son bo'yicha algoritmlarni o'lchab, `benchmark_results
 
 ## Ilmiy xulosa
 Fermat va tasodifiy Miller-Rabin ehtimollik natijasini beradi. Deterministik Miller-Rabin uint64 diapazoni uchun aniq xulosa beradi. Benchmark vaqtlari qurilma, kompilyator va tizim yuklamasiga bog'liq.
+
+## CI: avtomatik tekshiruv
+GitHub Actions har bir `main` push va pull requestda Linux (GCC) hamda Windows (MSVC) muhitida loyihani yig'adi va testlarni ishga tushiradi. Linux job benchmarkni ham bajarib, `benchmark_results.csv` faylini artifact sifatida saqlaydi.
+
+Holatni GitHub repository sahifasidagi **Actions** bo'limidan tekshiring. Workflow muvaffaqiyatli tugamaguncha testlardan o'tdi deb hisoblamang.
+
+## Ilmiy ish uchun tavsiya etilgan natijalar
+Benchmark CSV faylini Excel yoki LibreOffice Calc orqali oching. Bir xil son va algoritm uchun bir necha marta alohida o'lchov o'tkazib, medianani taqqoslang. Hisobotga CPU modeli, OS, kompilyator versiyasi va Release/Debug rejimini yozing. Turli kompyuterlardagi vaqtlarni bevosita teng sharoitdagi o'lchov deb qabul qilmang.
