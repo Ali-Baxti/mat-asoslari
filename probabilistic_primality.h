@@ -84,4 +84,31 @@ inline ProbablePrimeResult millerRabinTest(uint64_t n, uint64_t rounds, uint64_t
     return {true, 0, rounds};
 }
 
+// Deterministik Miller-Rabin: ushbu asoslar butun uint64_t diapazoni uchun yetarli.
+inline bool isPrimeDeterministic64(uint64_t n) {
+    if (n < 2) return false;
+    const uint64_t small[] = {2,3,5,7,11,13,17,19,23,29,31,37};
+    for (uint64_t p : small) {
+        if (n == p) return true;
+        if (n % p == 0) return false;
+    }
+    uint64_t d = n - 1, s = 0;
+    while ((d & 1U) == 0) { d >>= 1U; ++s; }
+    const uint64_t bases[] = {2,325,9375,28178,450775,9780504,1795265022};
+    for (uint64_t base : bases) {
+        uint64_t a = base % n;
+        if (a == 0) continue;
+        uint64_t x = powerMod(a, d, n);
+        if (x == 1 || x == n - 1) continue;
+        bool passed = false;
+        for (uint64_t r = 1; r < s; ++r) {
+            x = multiplyMod(x, x, n);
+            if (x == n - 1) { passed = true; break; }
+            if (x == 1) return false;
+        }
+        if (!passed) return false;
+    }
+    return true;
+}
+
 #endif
