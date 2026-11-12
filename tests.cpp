@@ -14,6 +14,11 @@ int main() {
     check(millerRabinTest(97,10).probablePrime,"Miller-Rabin: 97");
     check(!millerRabinTest(561,12).probablePrime,"Miller-Rabin: Carmichael 561");
     check(!millerRabinTest(1000005,10).probablePrime,"Miller-Rabin: 1000005");
+    check(isPrimeDeterministic64(2),"Deterministik MR: 2 tub");
+    check(isPrimeDeterministic64(18446744073709551557ULL),"Deterministik MR: katta 64-bit tub son");
+    check(!isPrimeDeterministic64(18446744073709551615ULL),"Deterministik MR: UINT64_MAX murakkab");
+    check(!isPrimeDeterministic64(341550071728321ULL),"Deterministik MR: kuchli psevdotub son");
+    check(!isPrimeDeterministic64(3825123056546413051ULL),"Deterministik MR: kuchli psevdotub son 2");
     check(fermatTest(97,10).probablePrime,"Fermat: 97");
     check(!fermatTest(15,10).probablePrime,"Fermat: 15");
     check(multiplyMod(UINT64_MAX-1,UINT64_MAX-1,UINT64_MAX)==1,"modulyar ko'paytirish overflow sinovi");
