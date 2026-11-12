@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(prime_checker main.cpp)
+add_executable(prime_benchmark benchmark.cpp)
 
 enable_testing()
 add_executable(prime_checker_tests tests.cpp)
