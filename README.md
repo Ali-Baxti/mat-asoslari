@@ -1,44 +1,41 @@
-# Tub sonni tekshirish dasturi
+# Tub sonni tekshirish va algoritmlarni taqqoslash
 
 **Fan:** Matematik asoslar  
 **Mavzu:** Sonlarni tubikka tekshiruvchi deterministik algoritmlarning kompleks dasturiy ta'minotini ishlab chiqish  
-**Dasturlash tili:** C++
+**Dasturlash tili:** C++17
 
-## Loyiha haqida
+## Loyiha maqsadi
 
-Dastur kiritilgan butun sonning tub yoki tub emasligini deterministik sinov bo'linish algoritmi yordamida aniqlaydi. Natijada sonning holati, topilgan bo'luvchi (agar mavjud bo'lsa), tekshirishlar soni va bajarilish vaqti ko'rsatiladi.
+Kiritilgan son tub yoki tub emasligini ikki deterministik algoritm yordamida aniqlash va tekshiruvlar soni hamda ishlash vaqtini taqqoslash.
 
-## Algoritm
+## Algoritmlar
 
-1. 2 dan kichik sonlar tub emas.
-2. 2 va 3 tub son hisoblanadi.
-3. 2 dan boshqa juft sonlar tub emas.
-4. Toq sonlar uchun 3 dan boshlab faqat toq bo'luvchilar tekshiriladi.
-5. Tekshirish i <= n / i sharti bilan davom etadi; bu i * i ko'paytmasidagi overflow xavfini oldini oladi.
-6. Bo'luvchi topilmasa, son tub hisoblanadi.
+### 1. Oddiy toq bo'luvchilar usuli
 
-## Algoritm murakkabligi
+3 dan boshlab toq bo'luvchilar sqrt(n) gacha tekshiriladi. Vaqt murakkabligi O(sqrt(n)), qo'shimcha xotira O(1).
 
-- Vaqt: **O(√n)**.
-- Qo'shimcha xotira: **O(1)**.
+### 2. 6k +/- 1 usuli
 
-## Kompilyatsiya va ishga tushirish
+2 va 3 ga bo'linmaydigan tub sonlar 6k-1 yoki 6k+1 ko'rinishida bo'lishi mumkin. Shu sababli faqat shu ko'rinishdagi nomzod bo'luvchilar tekshiriladi. Vaqt murakkabligi O(sqrt(n)).
 
-### Faqat asosiy dasturni g++ bilan
+## Dastur imkoniyatlari
+
+- Sonni tub yoki tub emasligini aniqlash.
+- Ikki algoritm natijasini solishtirish.
+- Har bir algoritm tekshiruvlar sonini ko'rsatish.
+- Ishlash vaqtini millisekundlarda o'lchash.
+- Topilgan bo'luvchini chiqarish.
+
+## Kompilyatsiya
 
 ```bash
 g++ -std=c++17 -O2 -Wall -Wextra -pedantic main.cpp -o prime_checker
 ./prime_checker
 ```
 
-Windows:
+Windowsda bajariladigan fayl nomi prime_checker.exe bo'ladi.
 
-```bash
-g++ -std=c++17 -O2 -Wall -Wextra -pedantic main.cpp -o prime_checker.exe
-prime_checker.exe
-```
-
-### CMake va avtomatik testlar
+## Avtomatik testlar
 
 ```bash
 cmake -S . -B build
@@ -46,19 +43,12 @@ cmake --build build
 ctest --test-dir build --output-on-failure
 ```
 
-## Sinov holatlari
+Testlar ikki algoritmni bir xil sonlarda tekshiradi va natijalar mos kelmasa xato kodi qaytaradi.
 
-| Son | Kutiladigan natija |
-|---:|---|
-| 0, 1 | Tub emas |
-| 2, 3, 17, 97 | Tub |
-| 4, 25, 100 | Tub emas |
-| 49 | Tub emas, bo'luvchi 7 |
+## Loyiha tuzilishi
 
-## Loyiha fayllari
-
-- main.cpp — foydalanuvchi bilan ishlaydigan asosiy dastur.
-- prime_checker.h — tub sonni aniqlash algoritmi.
-- tests.cpp — avtomatik testlar.
+- main.cpp — foydalanuvchi interfeysi va vaqt o'lchash.
+- prime_checker.h — ikkita deterministik algoritm.
+- tests.cpp — algoritmlarni taqqoslovchi testlar.
 - CMakeLists.txt — yig'ish va test sozlamalari.
-- .gitignore — kompilyatsiya fayllarini Git'dan chiqaradi.
+- .github/workflows/cpp.yml — GitHub Actions avtomatik tekshiruvi.
