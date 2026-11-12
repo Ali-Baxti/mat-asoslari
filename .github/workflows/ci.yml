@@ -1,4 +1,4 @@
-name: C++ CI
+name: C++ CI and Windows Desktop Build
 
 on:
   push:
@@ -30,14 +30,48 @@ jobs:
           if-no-files-found: error
 
   windows:
-    name: Windows / MSVC
+    name: Windows / Qt 6 Desktop
     runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install Qt 6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.3'
+          host: windows
+          target: desktop
+          arch: win64_msvc2022_64
+          cache: true
+
       - name: Configure
-        run: cmake -S . -B build -A x64 -DBUILD_QT_GUI=OFF
+        shell: pwsh
+        run: cmake -S . -B build -A x64 -DBUILD_QT_GUI=ON
+
       - name: Build
         run: cmake --build build --config Release --parallel
+
       - name: Test
         run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Package Windows application
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path package | Out-Null
+          Copy-Item build/Release/prime_checker_gui.exe package/
+          Copy-Item build/Release/prime_checker.exe package/ -ErrorAction SilentlyContinue
+          Copy-Item build/Release/prime_benchmark.exe package/ -ErrorAction SilentlyContinue
+          windeployqt --release --compiler-runtime package/prime_checker_gui.exe
+          @'
+          Tub Sonlarni Tekshirish — Windows dasturi
+          Ishga tushirish: prime_checker_gui.exe
+          Konsol versiyasi: prime_checker.exe
+          '@ | Set-Content package/README.txt -Encoding UTF8
+
+      - name: Upload Windows application
+        uses: actions/upload-artifact@v4
+        with:
+          name: tub-sonlar-windows-x64
+          path: package/
+          if-no-files-found: error
