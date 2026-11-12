@@ -21,7 +21,7 @@ Tub sonlarni aniqlash algoritmlarini C++17 tilida ishlab chiqish va ularning sam
 - **Miller-Rabin:** n-1 ni d*2^s ko'rinishida yozib, modulyar darajalar orqali murakkablik guvohini izlaydi.
 - **Modulyar darajaga oshirish:** tez darajaga oshirish usuli yordamida katta darajalar qoldiq bilan hisoblanadi.
 
-## 4. Murakkabliklar
+## 4. Algoritmlar murakkabligi
 | Algoritm | Vaqt murakkabligi | Xulosa turi |
 |---|---:|---|
 | Oddiy sinov bo'linish | O(sqrt(n)) | Deterministik |
@@ -34,13 +34,15 @@ Bu yerda k — raundlar soni, M(log n) — modulyar ko'paytirish xarajati. Amald
 
 ## 5. Tajriba metodikasi
 1. Bir xil kompilyator va optimallashtirish sozlamalaridan foydalanish.
-2. Har bir sonni har bir algoritmda tekshirish.
-3. Juda tez ishlaydigan algoritmlar uchun o'lchovni bir necha marta takrorlash va medianani olish.
-4. CSV natijalarini Excelga import qilish.
+2. Birinchi chaqiruvni warm-up sifatida bajarish.
+3. Har bir algoritm uchun 11 ta vaqt o'lchovi olish.
+4. CSV'dagi median qiymatni asosiy taqqoslash mezoni sifatida ishlatish; min va max qiymatlarni ham ko'rsatish.
 5. Alohida grafiklarda ishlash vaqtini va bo'luvchi tekshiruvlari sonini ko'rsatish.
-6. Qurilma, operatsion tizim, kompilyator versiyasi va build rejimini hisobotda qayd etish.
+6. Qurilma, operatsion tizim, kompilyator versiyasi va Release/Debug rejimini hisobotda qayd etish.
 
-**Muhim:** `benchmark.cpp` juda katta qiymatlarda sinov bo'linish usullarini uzoq kutib qolmaslik uchun 10^12 dan yuqori sonlarda o'tkazib yuboradi. Bu holat CSVda `skipped_large_input` deb belgilanadi. Deterministik Miller-Rabin esa 64-bit sonlarni tekshirishda davom etadi.
+**Muhim:** benchmark juda katta qiymatlarda sinov bo'linish usullarini uzoq kutib qolmaslik uchun 10^12 dan yuqori sonlarda o'tkazib yuboradi. Bu holat CSV'da `skipped_large_input` deb belgilanadi. Deterministik Miller-Rabin esa uint64 diapazonidagi namunalarni tekshiradi.
+
+Vaqt natijalari kompyuter va tizim yuklamasiga bog'liq. Juda kichik vaqtlar o'lchov shovqiniga sezgir bo'lishi mumkin; shu sababli takroriy o'lchov va medianadan foydalaniladi.
 
 ## 6. Himoyada berilishi mumkin bo'lgan savollar
 **Savol: 1 tub sonmi?**  
