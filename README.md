@@ -14,29 +14,33 @@ Tub sonlarni aniqlashning deterministik va ehtimollik algoritmlarini amaliy taqq
 4. **Miller-Rabin** — kuchli ehtimollik testi.
 5. **Deterministik Miller-Rabin** — maxsus asoslar bilan butun uint64 diapazonida aniq natija beradi.
 
-## Grafik interfeys (ixtiyoriy)
-Qt 6 Widgets o'rnatilgan bo'lsa, CMake `prime_checker_gui` targetini ham yaratadi. Qt o'rnatilmagan bo'lsa, konsol dasturi, testlar va benchmark odatdagidek yig'iladi.
-
+## Qurish va ishga tushirish
 ```bash
-cmake -S . -B build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
-```
-
-Qt mavjud bo'lsa, `prime_checker_gui` dasturini ishga tushiring. Qt yo'q bo'lsa, CMake GUI targetini avtomatik o'tkazib yuboradi.
-
-## Konsol kompilyatsiyasi
-```bash
-g++ -std=c++17 -O2 -Wall -Wextra -pedantic main.cpp -o prime_checker
-./prime_checker
-```
-
-## Test va benchmark
-```bash
 ctest --test-dir build --output-on-failure
+```
+
+Qt 6 Widgets mavjud bo'lsa, ixtiyoriy `prime_checker_gui` targeti ham yaratiladi. Qt bo'lmasa, konsol dasturi, testlar va benchmark odatdagidek yig'iladi.
+
+Konsol uchun:
+```bash
+./build/prime_checker
+```
+
+Benchmark uchun:
+```bash
 ./build/prime_benchmark
 ```
 
-Benchmark 10 ta namunaviy son bo'yicha algoritmlarni o'lchab, `benchmark_results.csv` yaratadi. Sinov bo'linish usullari 10^12 dan katta sonlarda uzoq ishlamasligi uchun benchmarkdan o'tkazib yuboriladi.
+Windows'da Visual Studio generatori bilan qurilganda executable fayllar `build/Release/` ichida bo'lishi mumkin.
+
+## Benchmark metodikasi
+Benchmark 10 ta namunaviy sonni oladi. Har bir algoritm uchun bir marta warm-up va 11 ta vaqt o'lchovi bajariladi. CSV faylida minimum, median va maksimum mikrosekundlarda yoziladi. Taqqoslashda median qiymatidan foydalanish tavsiya etiladi.
+
+Sinov bo'linish usullari 10^12 dan katta sonlarda uzoq ishlamasligi uchun o'tkazib yuboriladi va CSV'da `skipped_large_input` deb belgilanadi. Bu algoritm natijasi emas, balki benchmark chegarasidir. Deterministik Miller-Rabin barcha namunalarni tekshiradi.
+
+Benchmark vaqti protsessor, operatsion tizim, kompilyator, build turi va fon yuklamasiga bog'liq. Hisobotda ushbu muhit ma'lumotlarini qayd eting.
 
 ## Fayllar
 - `main.cpp` — konsol interfeysi.
@@ -44,17 +48,12 @@ Benchmark 10 ta namunaviy son bo'yicha algoritmlarni o'lchab, `benchmark_results
 - `prime_checker.h` — deterministik sinov bo'linish algoritmlari.
 - `probabilistic_primality.h` — Fermat va Miller-Rabin algoritmlari.
 - `tests.cpp` — avtomatik testlar.
-- `benchmark.cpp` — CSV benchmark.
+- `benchmark.cpp` — takroriy o'lchovlar bilan CSV benchmark.
 - `docs/DEFENSE_GUIDE_UZ.md` — himoya qo'llanmasi.
 - `docs/ALGORITHM_FLOWCHARTS.md` — algoritm blok-sxemalari.
 
 ## Ilmiy xulosa
-Fermat va tasodifiy Miller-Rabin ehtimollik natijasini beradi. Deterministik Miller-Rabin uint64 diapazoni uchun aniq xulosa beradi. Benchmark vaqtlari qurilma, kompilyator va tizim yuklamasiga bog'liq.
+Fermat va tasodifiy Miller-Rabin ehtimollik natijasini beradi. Deterministik Miller-Rabin uint64 diapazoni uchun aniq xulosa beradi. Tajriba xulosalari faqat amalda olingan CSV natijalari asosida yozilishi kerak.
 
 ## CI: avtomatik tekshiruv
-GitHub Actions har bir `main` push va pull requestda Linux (GCC) hamda Windows (MSVC) muhitida loyihani yig'adi va testlarni ishga tushiradi. Linux job benchmarkni ham bajarib, `benchmark_results.csv` faylini artifact sifatida saqlaydi.
-
-Holatni GitHub repository sahifasidagi **Actions** bo'limidan tekshiring. Workflow muvaffaqiyatli tugamaguncha testlardan o'tdi deb hisoblamang.
-
-## Ilmiy ish uchun tavsiya etilgan natijalar
-Benchmark CSV faylini Excel yoki LibreOffice Calc orqali oching. Bir xil son va algoritm uchun bir necha marta alohida o'lchov o'tkazib, medianani taqqoslang. Hisobotga CPU modeli, OS, kompilyator versiyasi va Release/Debug rejimini yozing. Turli kompyuterlardagi vaqtlarni bevosita teng sharoitdagi o'lchov deb qabul qilmang.
+GitHub Actions har bir `main` push va pull requestda Linux (GCC) hamda Windows (MSVC) muhitida loyihani yig'adi va testlarni ishga tushiradi. Linux job benchmarkni ham bajarib, `benchmark_results.csv` faylini artifact sifatida saqlaydi. Holatni repository'dagi **Actions** bo'limidan tekshiring.
