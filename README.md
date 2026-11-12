@@ -68,3 +68,26 @@ python tools/plot_benchmark.py benchmark_results.csv
 ```
 
 Diagrammalar `benchmark_charts/` papkasida saqlanadi. Har bir algoritm alohida chizma oladi. Katta sonlarda o'tkazib yuborilgan sinov-bo'linish qatorlari grafikdan chiqariladi. Diagrammalar faqat sizning kompyuteringizda olingan real CSV o'lchovlarini aks ettiradi.
+
+
+## Qt 6 grafik interfeysi
+
+Qt 6 Widgets o'rnatilgan bo'lsa, CMake avtomatik ravishda `prime_checker_gui` targetini yaratadi. GUI quyidagilarni taqdim etadi:
+
+- son kiritish va beshta algoritmni alohida tanlash;
+- natijalarni jadvalda ko'rsatish;
+- har bir algoritmni 5 marta o'lchab, median vaqtni chiqarish;
+- bajarilish vaqtlarini ustunli diagrammada taqqoslash;
+- natijalarni CSV formatida saqlash.
+
+Qt 6 mavjud bo'lmasa, grafik target o'tkazib yuboriladi, konsol dasturi va testlar qurilishda davom etadi. GUI'dagi Fermat va tasodifiy Miller-Rabin natijalari **"Ehtimol tub"** deb belgilanadi, chunki ular ehtimollik testlaridir. Deterministik Miller-Rabin uint64 diapazonida aniq natija beradi.
+
+Windows uchun Qt 6 va CMake o'rnatilgach:
+
+```powershell
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+.\build\Release\prime_checker_gui.exe
+```
+
+Agar Qt 6 CMake tomonidan topilmasa, `CMAKE_PREFIX_PATH` orqali Qt 6 ning CMake paketlari joylashgan papkasini ko'rsating.
