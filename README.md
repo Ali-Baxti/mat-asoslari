@@ -21,6 +21,9 @@ Fermat kichik teoremasiga asoslanadi: tub n uchun a^(n-1) ≡ 1 (mod n), agar 1<
 ### 4. Miller-Rabin ehtimollik testi
 n-1=d*2^s ko'rinishidan foydalanadigan kuchli ehtimollik testi. Raundlar soni oshishi bilan xato ehtimoli kamayadi, ammo bu versiya ham "ehtimol tub" xulosasini beradi. Dastur 10 raund va qayta ishlab bo'ladigan seed ishlatadi.
 
+### 5. Deterministik Miller-Rabin (64-bit)
+Maxsus tanlangan 7 ta asos butun uint64_t diapazoni uchun deterministik natija beradi. Bu ehtimollikdagi Miller-Rabin versiyasidan farq qiladi.
+
 ## Modulyar arifmetika
 Modulyar ko'paytirish qo'shish va ikkiga bo'lish orqali bajariladi, shu sababli C++17 da __int128 talab qilmaydi.
 
