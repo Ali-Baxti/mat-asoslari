@@ -1,4 +1,7 @@
 #include <QApplication>
+#include <QAbstractItemView>
+#include <QSizePolicy>
+#include <QStringList>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFile>
