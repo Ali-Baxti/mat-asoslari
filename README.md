@@ -57,3 +57,14 @@ Fermat va tasodifiy Miller-Rabin ehtimollik natijasini beradi. Deterministik Mil
 
 ## CI: avtomatik tekshiruv
 GitHub Actions har bir `main` push va pull requestda Linux (GCC) hamda Windows (MSVC) muhitida loyihani yig'adi va testlarni ishga tushiradi. Linux job benchmarkni ham bajarib, `benchmark_results.csv` faylini artifact sifatida saqlaydi. Holatni repository'dagi **Actions** bo'limidan tekshiring.
+
+
+## Diagrammalar yaratish
+Benchmarkni ishga tushirgach, CSV faylidan PNG diagrammalarini yaratish mumkin:
+
+```bash
+python -m pip install matplotlib
+python tools/plot_benchmark.py benchmark_results.csv
+```
+
+Diagrammalar `benchmark_charts/` papkasida saqlanadi. Har bir algoritm alohida chizma oladi. Katta sonlarda o'tkazib yuborilgan sinov-bo'linish qatorlari grafikdan chiqariladi. Diagrammalar faqat sizning kompyuteringizda olingan real CSV o'lchovlarini aks ettiradi.
