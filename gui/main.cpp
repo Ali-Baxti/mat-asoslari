@@ -83,7 +83,7 @@ int main(int argc,char *argv[]) {
         bool exact=false; ms=elapsedMs([&]{exact=isPrimeDeterministic64(n);});
         result+=QString("5. Deterministik Miller-Rabin: %1 | %2 ms\n").arg(exact?"TUB":"TUB EMAS").arg(ms,0,'f',6);
         latestCsv+=QString("deterministic_miller_rabin_64,%1,7,%2\n").arg(exact?"prime":"composite").arg(ms,0,'f',6);
-        result+=QString("\nDeterministik algoritmlar mosligi: %1").arg(n<=1000000000000ULL && (exact==isPrime6k1(n,*new uint64_t(0),*new uint64_t(0)))?"MOS":"Natija deterministik MR bilan tasdiqlandi");
+        if(n<=1000000000000ULL){uint64_t checkDivisor=0,checkCount=0;const bool check6k=isPrime6k1(n,checkDivisor,checkCount);result+=QString("\nDeterministik algoritmlar mosligi: %1").arg(exact==check6k?"MOS":"FARQ BOR");}else{result+="\nKatta son deterministik Miller-Rabin bilan tekshirildi.";}
         output->setPlainText(result);
     });
     QObject::connect(save,&QPushButton::clicked,[&](){
