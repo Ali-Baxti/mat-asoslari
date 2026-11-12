@@ -3,39 +3,9 @@
 #include <iostream>
 #include <limits>
 #include <string>
+#include "prime_checker.h"
 
 using namespace std;
-
-// Deterministik sinov bo'linish algoritmi.
-// i <= n / i tekshiruvi i * i ko'paytmasidagi overflow'ni oldini oladi.
-bool isPrime(uint64_t n, uint64_t& divisor, uint64_t& checks) {
-    checks = 0;
-    divisor = 0;
-
-    if (n < 2) {
-        return false;
-    }
-
-    if (n == 2 || n == 3) {
-        return true;
-    }
-
-    if (n % 2 == 0) {
-        divisor = 2;
-        return false;
-    }
-
-    // 2 dan keyin faqat toq bo'luvchilar tekshiriladi.
-    for (uint64_t i = 3; i <= n / i; i += 2) {
-        ++checks;
-        if (n % i == 0) {
-            divisor = i;
-            return false;
-        }
-    }
-
-    return true;
-}
 
 bool parseNumber(const string& input, uint64_t& number) {
     if (input.empty() || input.front() == '-') {
