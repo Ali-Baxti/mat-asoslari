@@ -1,83 +1,40 @@
 #include <chrono>
 #include <cstdint>
 #include <iostream>
-#include <limits>
 #include <string>
 #include "prime_checker.h"
 
 using namespace std;
 
 bool parseNumber(const string& input, uint64_t& number) {
-    if (input.empty() || input.front() == '-') {
-        return false;
-    }
+    if (input.empty() || input.front() == '-') return false;
+    try { size_t processed=0; unsigned long long value=stoull(input,&processed); if(processed!=input.size()) return false; number=static_cast<uint64_t>(value); return true; }
+    catch (...) { return false; }
+}
 
-    try {
-        size_t processed = 0;
-        unsigned long long value = stoull(input, &processed);
-
-        if (processed != input.size()) {
-            return false;
-        }
-
-        number = static_cast<uint64_t>(value);
-        return true;
-    } catch (...) {
-        return false;
-    }
+template <typename Algorithm>
+double measureMilliseconds(Algorithm algorithm,uint64_t number,bool& result,uint64_t& divisor,uint64_t& checks) {
+    const auto start=chrono::steady_clock::now(); result=algorithm(number,divisor,checks);
+    const auto finish=chrono::steady_clock::now();
+    return chrono::duration<double,milli>(finish-start).count();
 }
 
 int main() {
-    cout << "==============================================\n";
-    cout << "       TUB SONNI TEKSHIRISH DASTURI\n";
-    cout << "  Deterministik sinov bulinish algoritmi\n";
-    cout << "==============================================\n";
-
-    while (true) {
-        cout << "\nSon kiriting (chiqish uchun q): ";
-
-        string input;
-        getline(cin, input);
-
-        if (input == "q" || input == "Q") {
-            cout << "Dastur yakunlandi. Rahmat!\n";
-            break;
-        }
-
-        uint64_t number = 0;
-        if (!parseNumber(input, number)) {
-            cout << "Xato: 0 dan katta yoki teng butun son kiriting.\n";
-            continue;
-        }
-
-        uint64_t divisor = 0;
-        uint64_t checks = 0;
-
-        const auto start = chrono::high_resolution_clock::now();
-        const bool prime = isPrime(number, divisor, checks);
-        const auto finish = chrono::high_resolution_clock::now();
-
-        const auto elapsed =
-            chrono::duration<double, milli>(finish - start).count();
-
-        cout << "\n------------- NATIJA -------------\n";
-        cout << "Kiritilgan son: " << number << '\n';
-
-        if (prime) {
-            cout << "Xulosa: " << number << " — tub son.\n";
-        } else {
-            cout << "Xulosa: " << number << " — murakkab son yoki tub emas.\n";
-            if (divisor != 0) {
-                cout << "Topilgan bo'luvchi: " << divisor << '\n';
-            } else if (number < 2) {
-                cout << "Izoh: tub sonlar 2 dan boshlanadi.\n";
-            }
-        }
-
-        cout << "Tekshirilgan bo'luvchilar soni: " << checks << '\n';
-        cout << "Hisoblash vaqti: " << elapsed << " ms\n";
-        cout << "----------------------------------\n";
+    cout << "TUB SONNI TEKSHIRISH DASTURI\nIkki deterministik algoritm taqqoslanadi\n";
+    while(true) {
+        cout << "\nSon kiriting (chiqish uchun q): "; string input; getline(cin,input);
+        if(input=="q" || input=="Q") break;
+        uint64_t number=0;
+        if(!parseNumber(input,number)) { cout << "Xato: manfiy bo'lmagan butun son kiriting.\n"; continue; }
+        uint64_t d1=0,c1=0,d2=0,c2=0; bool p1=false,p2=false;
+        double t1=measureMilliseconds(isPrime,number,p1,d1,c1);
+        double t2=measureMilliseconds(isPrime6k1,number,p2,d2,c2);
+        cout << "\nSon: " << number << "\nXulosa: " << (p2 ? "tub" : "tub emas") << "\n";
+        cout << "1) Oddiy usul: " << (p1 ? "tub" : "tub emas") << ", tekshiruvlar=" << c1 << ", vaqt=" << t1 << " ms\n";
+        if(d1) cout << "   Bo'luvchi: " << d1 << "\n";
+        cout << "2) 6k +/- 1 usuli: " << (p2 ? "tub" : "tub emas") << ", tekshiruvlar=" << c2 << ", vaqt=" << t2 << " ms\n";
+        if(d2) cout << "   Bo'luvchi: " << d2 << "\n";
+        cout << "Algoritmlar natijasi: " << (p1==p2 ? "bir xil" : "farq bor!") << "\n";
     }
-
-    return 0;
+    cout << "Dastur yakunlandi.\n"; return 0;
 }
