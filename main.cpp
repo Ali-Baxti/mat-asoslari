@@ -37,6 +37,7 @@ int main() {
         if(d2) cout << "   Bo'luvchi: " << d2 << "\n";
         cout << "3) Fermat (10 raund): " << (f.probablePrime?"EHTIMOL TUB":"MURAKKAB") << ", raund=" << f.roundsRun << ", vaqt=" << tf << " ms\n";
         cout << "4) Miller-Rabin (10 raund): " << (mr.probablePrime?"EHTIMOL TUB":"MURAKKAB") << ", raund=" << mr.roundsRun << ", vaqt=" << tm << " ms\n";
+        cout << "5) Deterministik Miller-Rabin (64-bit): " << (isPrimeDeterministic64(n)?"TUB":"TUB EMAS") << " [aniq natija]\\n";
         cout << "Deterministik natijalar: " << (p1==p2?"mos":"farq bor") << "\n";
         cout << "Eslatma: ehtimollik testidagi EHTIMOL TUB mutlaq isbot emas.\n";
     }
