@@ -1,22 +1,40 @@
-name: C++ build and tests
+name: C++ build, tests and benchmark
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
-  build-and-test:
+  linux:
+    name: Linux GCC / CMake
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Configure CMake
-        run: cmake -S . -B build
-      - name: Build project
-        run: cmake --build build --config Release
-      - name: Run tests
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DBUILD_QT_GUI=OFF -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --parallel 2
+      - name: Unit tests
         run: ctest --test-dir build --output-on-failure
-      - name: Run benchmark smoke test
+      - name: Benchmark smoke test
         run: ./build/prime_benchmark && test -s benchmark_results.csv
+      - name: Upload benchmark CSV
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-linux
+          path: benchmark_results.csv
+
+  windows:
+    name: Windows MSVC / CMake
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DBUILD_QT_GUI=OFF
+      - name: Build
+        run: cmake --build build --config Release --parallel 2
+      - name: Unit tests
+        run: ctest --test-dir build -C Release --output-on-failure
