@@ -51,3 +51,16 @@ Testlar chegaraviy qiymatlar, kichik va katta tub/murakkab sonlar, Carmichael 56
 - tests.cpp — avtomatik testlar.
 - CMakeLists.txt — yig'ish va test sozlamalari.
 - .github/workflows/cpp.yml — GitHub Actions avtomatik tekshiruvi.
+
+## Benchmark va statistik ma'lumotlar
+
+Barcha algoritmlarni bir xil oldindan tanlangan sonlarda o'lchash uchun benchmark dasturi mavjud.
+
+```bash
+cmake --build build
+./build/prime_benchmark
+```
+
+Windowsda: `build\\Debug\\prime_benchmark.exe` (yoki Release konfiguratsiyasidagi mos papka) ni ishga tushiring.
+
+Dastur `benchmark_results.csv` faylini yaratadi. Uni Excel orqali ochib, algoritmlar kesimida vaqt diagrammasi tuzish mumkin. O'lchangan vaqt qurilma, operatsion tizim va kompilyator optimallashtirishlariga bog'liq; juda qisqa vaqtlar shovqin ta'sirida o'zgarishi mumkin.
