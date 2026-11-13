@@ -31,10 +31,6 @@ jobs:
           test -s web/index.html
           grep -q "function deterministicMillerRabin64" web/index.html
           grep -q "function downloadCsv" web/index.html
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
