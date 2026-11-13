@@ -91,3 +91,19 @@ cmake --build build --config Release
 ```
 
 Agar Qt 6 CMake tomonidan topilmasa, `CMAKE_PREFIX_PATH` orqali Qt 6 ning CMake paketlari joylashgan papkasini ko'rsating.
+
+
+### GUI navigatsiyasi (yangilangan)
+
+Grafik interfeys bitta katta panelga jamlanmagan. Chap tomondagi navigatsiya orqali quyidagi mustaqil sahifalar almashadi:
+
+1. **Bosh sahifa** — loyiha tavsifi va tezkor o'tish.
+2. **Sonni tekshirish** — son kiritish, algoritm tanlash va natijalar jadvali.
+3. **Statistika va diagrammalar** — oxirgi tekshiruvning vaqt diagrammasi.
+4. **Tekshiruvlar tarixi** — joriy sessiyadagi bajarilgan tekshiruvlar.
+5. **Hisobotlar** — oxirgi natijalarni CSV faylga eksport qilish.
+6. **Algoritmlar haqida** — algoritmlarning ishlash prinsipi va cheklovlari.
+7. **Sozlamalar** — to'q yoki yorug' mavzuni tanlash.
+8. **Dastur haqida** — loyiha maqsadi va texnologiyalar.
+
+Tarix hozircha faqat dastur ochiq turgan sessiya davomida saqlanadi; dastur yopilganda tozalanadi. CSV eksport oxirgi bajarilgan tekshiruv natijalarini saqlaydi.
