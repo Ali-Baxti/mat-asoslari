@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#081426"><title>Tub Sonlar Laboratoriyasi</title>
+<style>
+:root{--bg:#081426;--side:#0b1930;--panel:#10233e;--border:#24466e;--text:#e8f1ff;--muted:#9db2ce;--blue:#2585f5;--blue2:#1268d8;--shadow:0 14px 40px #0003}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 "Segoe UI",Arial,sans-serif}
+.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}.sidebar{background:var(--side);border-right:1px solid var(--border);padding:24px 16px;display:flex;flex-direction:column;gap:8px}
+.brand{font-size:21px;font-weight:800;letter-spacing:.4px;color:#72bdff;padding:0 10px}.brand small{display:block;font-size:10px;letter-spacing:2px;color:var(--muted);font-weight:600;margin-top:3px}
+.nav{display:grid;gap:6px;margin-top:22px}.nav button{border:0;background:transparent;color:#c5d5e9;text-align:left;padding:12px 13px;border-radius:9px;cursor:pointer;font:inherit}
+.nav button:hover{background:#ffffff0c}.nav button.active{background:#203d60;color:white;font-weight:700;box-shadow:inset 3px 0 #55adff}
+.side-bottom{margin-top:auto;color:var(--muted);font-size:12px;padding:12px 10px;border-top:1px solid #ffffff12}
+main{min-width:0;padding:30px clamp(18px,3vw,42px) 40px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:24px}
+.crumb{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1.2px}h1{font-size:29px;line-height:1.2;margin:0 0 8px;letter-spacing:-.5px}h2{font-size:17px;margin:0 0 12px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:850px}.view{display:none}.view.active{display:block;animation:appear .18s ease}@keyframes appear{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:none}}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:19px;box-shadow:var(--shadow)}.grid{display:grid;gap:15px}.grid.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.stat{font-size:27px;font-weight:750;margin-top:8px}.muted{color:var(--muted)}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.action{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;background:var(--blue2);color:white;padding:10px 16px;border-radius:9px;cursor:pointer;font:600 14px "Segoe UI",Arial;text-decoration:none}
+.action:hover{filter:brightness(1.13)}.action.secondary{background:#1b3555;border-color:#345779;color:var(--text)}.action:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}
+label{display:block;font-weight:600;margin-bottom:7px}.field{width:100%;background:#0a1a30;border:1px solid #37618f;border-radius:9px;padding:12px 13px;color:white;font:17px "Consolas",monospace;outline:none}
+.field:focus{border-color:#68b9ff;box-shadow:0 0 0 3px #2585f533}.checks{display:grid;gap:10px}.check{display:flex;align-items:center;gap:10px;background:#0b1c33;border:1px solid #213f60;border-radius:9px;padding:10px 12px;font-weight:500}
+.check input{accent-color:#288cf6;width:17px;height:17px}
+table{width:100%;border-collapse:collapse;font-size:13px}th{background:#17365b;color:#e8f1ff;text-align:left;padding:11px 10px;font-weight:700}td{padding:11px 10px;border-bottom:1px solid #294666;color:#dce8f6}tbody tr:nth-child(even){background:#ffffff06}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:10px}.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700;background:#143c5d;color:#a9d9ff}.pill.good{background:#124636;color:#7ae6bf}.pill.warn{background:#4b3516;color:#ffd18a}.pill.bad{background:#4a2029;color:#ffacb5}
+.notice{border:1px solid #795823;background:#3a2b17;color:#ffdda1;padding:12px 14px;border-radius:9px;font-size:12px}
+.chart{display:grid;gap:13px;margin-top:16px}.bar-row{display:grid;grid-template-columns:minmax(130px,210px) 1fr 90px;gap:12px;align-items:center;font-size:12px}
+.bar-track{height:13px;background:#09192d;border-radius:99px;overflow:hidden}.bar{height:100%;border-radius:99px;background:linear-gradient(90deg,#267de3,#49b7ff);min-width:2px}
+.empty{padding:35px;text-align:center;color:var(--muted)}.info-list{display:grid;gap:12px}.info-item{padding:15px;border-radius:10px;background:#0b1d34;border:1px solid #213f60}.info-item strong{display:block;margin-bottom:5px;color:#9bd1ff}
+.footer-note{border-top:1px solid #ffffff14;margin-top:22px;padding-top:13px;color:var(--muted);font-size:12px}
+body.light{--bg:#f1f5fa;--side:#fff;--panel:#fff;--border:#d1deec;--text:#17263b;--muted:#60748d;--shadow:0 8px 24px #132e4a0d}
+body.light .nav button{color:#34506e}body.light .nav button.active{background:#dcecff;color:#125b9d}body.light .field{background:#f8fbff;color:#17263b;border-color:#bacde0}
+body.light .check,body.light .info-item{background:#f5f8fc;border-color:#d6e1ee}body.light th{background:#e3edf7;color:#173b63}body.light td{color:#263d57;border-color:#e0e8f0}
+body.light tbody tr:nth-child(even){background:#f5f8fc}body.light .bar-track{background:#e8eef6}body.light .action.secondary{background:#e5edf6;color:#173b63;border-color:#c4d3e3}
+body.light .notice{background:#fff7e8;color:#795823;border-color:#e8d2a5}
+@media(max-width:950px){.app{grid-template-columns:1fr}.sidebar{padding:13px 14px;border-right:0;border-bottom:1px solid var(--border)}.brand small{display:inline;margin-left:8px}.nav{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:10px}.nav button{text-align:center;padding:9px 5px;font-size:12px}.side-bottom{display:none}main{padding-top:22px}.grid.cards{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.nav{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.cards,.grid.two{grid-template-columns:1fr}h1{font-size:24px}.topbar{align-items:flex-start}.bar-row{grid-template-columns:1fr 55px;gap:5px}.bar-name{grid-column:1/-1}.panel{padding:14px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">π PRIME LAB<small>MATEMATIK ASOSLAR</small></div>
+  <nav class="nav" id="nav">
+    <button class="active" data-view="home">⌂　Bosh sahifa</button>
+    <button data-view="checker">◎　Sonni tekshirish</button>
+    <button data-view="stats">▥　Statistika</button>
+    <button data-view="history">◷　Tekshiruvlar tarixi</button>
+    <button data-view="reports">▤　Hisobotlar</button>
+    <button data-view="algorithms">∑　Algoritmlar</button>
+    <button data-view="settings">⚙　Sozlamalar</button>
+    <button data-view="about">ⓘ　Dastur haqida</button>
+  </nav>
+  <div class="side-bottom">Brauzer sinov versiyasi<br>C++17 loyihasining JavaScript demo talqini</div>
+</aside>
+<main>
+  <div class="topbar"><div class="crumb">TUB SONLAR LABORATORIYASI / <span id="crumb">BOSH SAHIFA</span></div><span class="pill good">● Tizim tayyor</span></div>
+  <section class="view active" id="view-home">
+    <h1>Bosh sahifa</h1><p class="lead">Tub sonlarni tekshirish algoritmlarini o'rganing, natijalarni solishtiring va tajriba hisobotini oling.</p>
+    <div class="grid cards">
+      <div class="panel"><div class="eyebrow">Asosiy modul</div><div class="stat">5</div><div class="muted">Tekshirish algoritmlari</div></div>
+      <div class="panel"><div class="eyebrow">Joriy sessiya</div><div class="stat" id="home-count">0</div><div class="muted">Bajarilgan tekshiruvlar</div></div>
+      <div class="panel"><div class="eyebrow">Raqamlar diapazoni</div><div class="stat">64-bit</div><div class="muted">0 dan 2⁶⁴−1 gacha</div></div>
+    </div>
+    <div class="grid two" style="margin-top:16px">
+      <div class="panel"><h2>Tezkor boshlash</h2><p class="muted">Son kiriting, algoritmlarni tanlang va har bir natijani jadvalda ko'ring.</p><button class="action" data-go="checker">Sonni tekshirish →</button></div>
+      <div class="panel"><h2>Taqqoslash</h2><p class="muted">Bajarilish vaqtlarini diagrammada ko'ring va CSV hisobotni saqlang.</p><button class="action secondary" data-go="stats">Diagrammalarni ochish</button></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="row between"><h2>Oxirgi faoliyat</h2><span class="muted" id="home-last">Hali natija yo'q</span></div><p class="muted">Tekshiruv natijasi olingach, shu yerda oxirgi son va bajarilgan algoritmlar ko'rsatiladi.</p></div>
+  </section>
+  <section class="view" id="view-checker">
+    <h1>Sonni tekshirish</h1><p class="lead">Sonni kiriting va kerakli algoritmlarni belgilang. Har bir vaqt — besh takrorning medianasi.</p>
+    <div class="grid two">
+      <div class="panel"><label for="number">Tekshiriladigan butun son</label><input id="number" class="field" type="text" inputmode="numeric" value="97" autocomplete="off" spellcheck="false"><div class="muted" style="font-size:12px;margin-top:8px">Ruxsat etilgan oraliq: 0 ... 18446744073709551615</div><div style="margin-top:15px" class="notice">Oddiy sinov bo'linish va 6k ± 1 usullari 10¹² dan katta sonlarda vaqtni tejash uchun o'tkazib yuboriladi.</div></div>
+      <div class="panel"><h2>Algoritmlarni tanlang</h2><div class="checks">
+        <label class="check"><input type="checkbox" class="algorithm" value="trial" checked> Oddiy sinov bo'linish</label>
+        <label class="check"><input type="checkbox" class="algorithm" value="sixk" checked> 6k ± 1 algoritmi</label>
+        <label class="check"><input type="checkbox" class="algorithm" value="fermat" checked> Fermat testi (10 raund)</label>
+        <label class="check"><input type="checkbox" class="algorithm" value="mr" checked> Miller–Rabin (10 raund)</label>
+        <label class="check"><input type="checkbox" class="algorithm" value="det" checked> Deterministik Miller–Rabin</label>
+      </div></div>
+    </div>
+    <div class="row" style="margin:16px 0"><button id="run" class="action">▶　Tekshirish</button><button id="clear" class="action secondary">Tozalash</button><span id="status" class="muted" role="status">Tayyor.</span></div>
+    <div class="panel"><div class="row between"><h2>Natijalar jadvali</h2><span class="muted" id="result-count">0 natija</span></div><div class="table-wrap"><table><thead><tr><th>Algoritm</th><th>Natija</th><th>Tekshiruv / raund</th><th>Vaqt (ms)</th></tr></thead><tbody id="results"><tr><td colspan="4" class="empty">Natijalar hali mavjud emas</td></tr></tbody></table></div></div>
+  </section>
+  <section class="view" id="view-stats">
+    <h1>Statistika va diagrammalar</h1><p class="lead">Oxirgi tekshiruv algoritmlarining bajarilish vaqti. O'lchovlar brauzer va qurilma yuklamasiga bog'liq.</p>
+    <div class="panel"><div class="row between"><h2>Algoritmlar tezligi</h2><span class="pill">Median / ms</span></div><div id="chart" class="chart"><div class="empty">Diagramma uchun avval tekshiruv bajaring.</div></div></div>
+    <div class="grid cards" style="margin-top:15px"><div class="panel"><div class="eyebrow">Oxirgi son</div><div id="stat-number" class="stat">—</div></div><div class="panel"><div class="eyebrow">Taqqoslangan algoritmlar</div><div id="stat-algorithms" class="stat">0</div></div><div class="panel"><div class="eyebrow">Eng tez algoritm</div><div id="stat-fastest" class="stat" style="font-size:18px">—</div></div></div>
+  </section>
+  <section class="view" id="view-history">
+    <h1>Tekshiruvlar tarixi</h1><p class="lead">Tarix joriy brauzer sessiyasida saqlanadi. Sahifa yangilansa, sessiya tarixi tozalanadi.</p>
+    <div class="panel"><div class="row between"><h2>Oxirgi tekshiruvlar</h2><button id="clear-history" class="action secondary">Tarixni tozalash</button></div><div class="table-wrap"><table><thead><tr><th>#</th><th>Son</th><th>Algoritmlar</th><th>Vaqt</th></tr></thead><tbody id="history"><tr><td colspan="4" class="empty">Tarix hozircha bo'sh</td></tr></tbody></table></div></div>
+  </section>
+  <section class="view" id="view-reports">
+    <h1>Hisobotlar</h1><p class="lead">Oxirgi tekshiruv natijalarini CSV formatida yuklab oling.</p>
+    <div class="panel"><h2>CSV eksport</h2><p id="report-info" class="muted">Hozircha eksport uchun natija yo'q.</p><button id="export" class="action" disabled>↓　CSV faylini yuklab olish</button></div>
+    <div class="panel" style="margin-top:15px"><h2>Hisobot tarkibi</h2><div class="info-list"><div class="info-item"><strong>Son</strong>Tekshirilgan 64-bit butun son.</div><div class="info-item"><strong>Algoritm va xulosa</strong>Algoritm nomi hamda tub/murakkab yoki ehtimol tub natijasi.</div><div class="info-item"><strong>O'lchovlar</strong>Tekshiruv yoki raundlar soni va median bajarilish vaqti.</div></div></div>
+  </section>
+  <section class="view" id="view-algorithms">
+    <h1>Algoritmlar haqida</h1><p class="lead">Loyihada deterministik va ehtimollik yondashuvlari taqqoslanadi.</p>
+    <div class="info-list">
+      <div class="info-item"><strong>1. Oddiy sinov bo'linish — O(√n)</strong>2 dan √n gacha bo'luvchilarni tekshiradi. Deterministik, tushunish oson, katta sonlarda sekin.</div>
+      <div class="info-item"><strong>2. 6k ± 1 — O(√n)</strong>2 va 3 dan keyin 6k−1 hamda 6k+1 nomzodlarini tekshiradi.</div>
+      <div class="info-item"><strong>3. Fermat testi — ehtimollik</strong>Fermatning kichik teoremasiga asoslanadi. Karmaykl sonlari kabi ayrim murakkab sonlarni tub deb qabul qilishi mumkin.</div>
+      <div class="info-item"><strong>4. Miller–Rabin — ehtimollik</strong>Kuchli ehtimollik testi. Ko'proq raund xato ehtimolini kamaytiradi.</div>
+      <div class="info-item"><strong>5. Deterministik Miller–Rabin — uint64</strong>2⁶⁴ dan kichik sonlar uchun yetarli asoslar to'plamidan foydalanadi.</div>
+    </div>
+    <div class="notice" style="margin-top:15px">Fermat va Miller–Rabin natijalari “Ehtimol tub” deb talqin qilinadi. Aniq xulosa uchun deterministik algoritmdan foydalaning.</div>
+  </section>
+  <section class="view" id="view-settings">
+    <h1>Sozlamalar</h1><p class="lead">Brauzer sinov versiyasining tashqi ko'rinishini tanlang.</p><div class="panel"><label for="theme">Rang mavzusi</label><select id="theme" class="field" style="font:14px 'Segoe UI'"><option value="dark">To'q mavzu</option><option value="light">Yorug' mavzu</option></select></div>
+  </section>
+  <section class="view" id="view-about">
+    <h1>Dastur haqida</h1><p class="lead">Matematik asoslar faniga mo'ljallangan tub sonlarni tekshirish o'quv loyihasi.</p>
+    <div class="grid two"><div class="panel"><h2>Texnologiyalar</h2><p class="muted">Brauzer sinov versiyasi HTML, CSS va JavaScript BigInt yordamida yaratilgan. Desktop loyiha C++17 va Qt 6 dan foydalanadi.</p></div><div class="panel"><h2>Maqsad</h2><p class="muted">Tub sonlarni aniqlash usullarini o'rganish, algoritmlarning ishlash xususiyatlari va tezligini solishtirish.</p></div></div>
+    <div class="footer-note">Bu mustaqil brauzer demo. Natija va vaqtlar C++/Qt Windows dasturidan alohida JavaScript muhitida hisoblanadi; ikki platforma o'lchovlarini bevosita tenglashtirmang.</div>
+  </section>
+</main>
+</div>
+<script>
+"use strict";
+const U64_MAX=(1n<<64n)-1n,TRIAL_LIMIT=1000000000000n;
+const $=id=>document.getElementById(id);
+let lastRows=[],lastNumber=null,checksDone=0,historyRows=[];
+const names={trial:"Oddiy sinov bo'linish",sixk:"6k ± 1 algoritmi",fermat:"Fermat testi (10 raund)",mr:"Miller–Rabin (10 raund)",det:"Deterministik Miller–Rabin"};
+function modPow(base,exponent,modulus){let result=1n;base%=modulus;while(exponent>0n){if(exponent&1n)result=result*base%modulus;exponent>>=1n;base=base*base%modulus;}return result;}
+function trialDivision(n){if(n<2n)return{prime:false,checks:0};if(n===2n||n===3n)return{prime:true,checks:0};if(n%2n===0n)return{prime:false,checks:0};let checks=0;for(let d=3n;d<=n/d;d+=2n){checks++;if(n%d===0n)return{prime:false,checks};}return{prime:true,checks};}
+function sixKPlusMinusOne(n){if(n<2n)return{prime:false,checks:0};if(n===2n||n===3n)return{prime:true,checks:0};if(n%2n===0n||n%3n===0n)return{prime:false,checks:0};let checks=0;for(let d=5n;d<=n/d;d+=6n){checks++;if(n%d===0n)return{prime:false,checks};checks++;if(n%(d+2n)===0n)return{prime:false,checks};}return{prime:true,checks};}
+function makeBases(n,rounds){if(n<=4n)return[];const mask=U64_MAX;let state=((n^0x9e3779b97f4a7c15n)&mask)||1n;const bases=[];for(let i=0;i<rounds;i++){state=(state*6364136223846793005n+1442695040888963407n)&mask;bases.push(2n+state%(n-3n));}return bases;}
+function fermatTest(n,bases){if(n<2n)return{probable:false,rounds:0};if(n===2n||n===3n)return{probable:true,rounds:0};if(n%2n===0n)return{probable:false,rounds:0};let rounds=0;for(const a of bases){rounds++;if(modPow(a,n-1n,n)!==1n)return{probable:false,rounds};}return{probable:true,rounds};}
+function millerRabinTest(n,bases){if(n<2n)return{probable:false,rounds:0};if(n===2n||n===3n)return{probable:true,rounds:0};if(n%2n===0n)return{probable:false,rounds:0};let d=n-1n,s=0;while((d&1n)===0n){d>>=1n;s++;}let rounds=0;for(const a of bases){rounds++;let x=modPow(a,d,n);if(x===1n||x===n-1n)continue;let passed=false;for(let r=1;r<s;r++){x=x*x%n;if(x===n-1n){passed=true;break;}if(x===1n)return{probable:false,rounds};}if(!passed)return{probable:false,rounds};}return{probable:true,rounds};}
+function deterministicMillerRabin64(n){if(n<2n)return false;const small=[2n,3n,5n,7n,11n,13n,17n,19n,23n,29n,31n,37n];for(const p of small){if(n===p)return true;if(n%p===0n)return false;}let d=n-1n,s=0;while((d&1n)===0n){d>>=1n;s++;}const bases=[2n,325n,9375n,28178n,450775n,9780504n,1795265022n];for(const raw of bases){const a=raw%n;if(a===0n)continue;let x=modPow(a,d,n);if(x===1n||x===n-1n)continue;let passed=false;for(let r=1;r<s;r++){x=x*x%n;if(x===n-1n){passed=true;break;}if(x===1n)return false;}if(!passed)return false;}return true;}
+function median(values){const sorted=values.slice().sort((a,b)=>a-b),mid=Math.floor(sorted.length/2);return sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;}
+function measure(fn){const samples=[];let output;for(let i=0;i<5;i++){const start=performance.now();output=fn();samples.push(performance.now()-start);}return{output,milliseconds:median(samples)};}
+function fmtMs(v){return v.toFixed(6);}
+function esc(v){return String(v).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+function renderRows(){const body=$("results");$("result-count").textContent=lastRows.length+" natija";if(!lastRows.length){body.innerHTML='<tr><td colspan="4" class="empty">Natijalar hali mavjud emas</td></tr>';return;}body.innerHTML=lastRows.map(row=>{const badge=row.status==="skip"?"warn":(row.result.indexOf("Murakkab")>=0?"bad":"good");return"<tr><td>"+esc(row.algorithm)+"</td><td><span class=\"pill "+badge+"\">"+esc(row.result)+"</span></td><td>"+esc(row.detail)+"</td><td>"+(row.ms===null?"—":fmtMs(row.ms))+"</td></tr>";}).join("");}
+function renderChart(){const timed=lastRows.filter(row=>row.ms!==null),target=$("chart");if(!timed.length){target.innerHTML='<div class="empty">Diagramma uchun vaqt o‘lchovi mavjud emas.</div>';$("stat-fastest").textContent="—";}else{const max=Math.max.apply(null,timed.map(r=>r.ms).concat([0.000001]));target.innerHTML=timed.map(row=>"<div class=\"bar-row\"><span class=\"bar-name\">"+esc(row.algorithm)+"</span><div class=\"bar-track\"><div class=\"bar\" style=\"width:"+Math.max(1,row.ms/max*100)+"%\"></div></div><b>"+fmtMs(row.ms)+"</b></div>").join("");const fastest=timed.slice().sort((a,b)=>a.ms-b.ms)[0];$("stat-fastest").textContent=fastest.algorithm;}$("stat-number").textContent=lastNumber===null?"—":lastNumber.toString();$("stat-algorithms").textContent=String(lastRows.length);}
+function renderHistory(){const body=$("history");if(!historyRows.length){body.innerHTML='<tr><td colspan="4" class="empty">Tarix hozircha bo‘sh</td></tr>';return;}body.innerHTML=historyRows.slice().reverse().map((item,index)=>"<tr><td>"+(historyRows.length-index)+"</td><td>"+item.number+"</td><td>"+item.count+"</td><td>"+esc(item.time)+"</td></tr>").join("");}
+function updateSummary(){$("home-count").textContent=String(checksDone);$("home-last").textContent=lastNumber===null?"Hali natija yo'q":"Oxirgi son: "+lastNumber.toString()+" · "+lastRows.length+" algoritm";$("report-info").textContent=lastNumber===null?"Hozircha eksport uchun natija yo'q.":"Oxirgi son: "+lastNumber.toString()+" · "+lastRows.length+" qator. CSV faylga tayyor.";$("export").disabled=lastRows.length===0;}
+function runCheck(){const raw=$("number").value.trim();if(!/^\d+$/.test(raw)){$("status").textContent="Faqat manfiy bo'lmagan butun son kiriting.";$("number").focus();return;}let n;try{n=BigInt(raw);}catch{$("status").textContent="Sonni o'qib bo'lmadi.";return;}if(n>U64_MAX){$("status").textContent="Son uint64 diapazonidan tashqarida.";return;}const selected=Array.from(document.querySelectorAll(".algorithm:checked")).map(el=>el.value);if(!selected.length){$("status").textContent="Kamida bitta algoritm tanlang.";return;}lastNumber=n;lastRows=[];const bases=makeBases(n,10);const add=(key,result,detail,ms,status)=>lastRows.push({algorithm:names[key],result:result,detail:detail,ms:ms,status:status||"ok"});for(const key of selected){if((key==="trial"||key==="sixk")&&n>TRIAL_LIMIT){add(key,"O'tkazib yuborildi","10¹² dan katta son",null,"skip");continue;}if(key==="trial"){const m=measure(()=>trialDivision(n));add(key,m.output.prime?"Tub son":"Murakkab son",m.output.checks+" tekshiruv",m.milliseconds);}else if(key==="sixk"){const m=measure(()=>sixKPlusMinusOne(n));add(key,m.output.prime?"Tub son":"Murakkab son",m.output.checks+" tekshiruv",m.milliseconds);}else if(key==="fermat"){const m=measure(()=>fermatTest(n,bases));add(key,m.output.probable?"Ehtimol tub":"Murakkab",m.output.rounds+" raund",m.milliseconds);}else if(key==="mr"){const m=measure(()=>millerRabinTest(n,bases));add(key,m.output.probable?"Ehtimol tub":"Murakkab",m.output.rounds+" raund",m.milliseconds);}else if(key==="det"){const m=measure(()=>deterministicMillerRabin64(n));add(key,m.output?"Tub son":"Murakkab son","7 ta asos (64-bit)",m.milliseconds);}}checksDone++;historyRows.push({number:n.toString(),count:lastRows.length,time:new Date().toLocaleTimeString("uz-UZ")});renderRows();renderChart();renderHistory();updateSummary();$("status").textContent="Tekshiruv yakunlandi: "+lastRows.length+" algoritm. Har biri 5 marta o'lchandi.";}
+function downloadCsv(){if(!lastRows.length||lastNumber===null)return;const quote=v=>'"'+String(v).replace(/"/g,'""')+'"';const lines=["son,algoritm,natija,tekshiruv_yoki_raund,vaqt_ms"];for(const row of lastRows)lines.push([lastNumber.toString(),quote(row.algorithm),quote(row.result),quote(row.detail),row.ms===null?"":row.ms.toFixed(9)].join(","));const blob=new Blob(["\uFEFF"+lines.join("\r\n")],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const link=document.createElement("a");link.href=url;link.download="tub-son-natijalari-"+lastNumber.toString()+".csv";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);}
+function showView(name){document.querySelectorAll(".view").forEach(el=>el.classList.toggle("active",el.id==="view-"+name));document.querySelectorAll("#nav button").forEach(el=>el.classList.toggle("active",el.dataset.view===name));const active=document.querySelector('#nav button[data-view="'+name+'"]');$("crumb").textContent=active?active.textContent.trim():"BOSH SAHIFA";}
+$("nav").addEventListener("click",event=>{const button=event.target.closest("button[data-view]");if(button)showView(button.dataset.view);});
+document.querySelectorAll("[data-go]").forEach(button=>button.addEventListener("click",()=>showView(button.dataset.go)));
+$("run").addEventListener("click",runCheck);$("number").addEventListener("keydown",event=>{if(event.key==="Enter")runCheck();});
+$("clear").addEventListener("click",()=>{$("number").value="";lastRows=[];lastNumber=null;renderRows();renderChart();updateSummary();$("status").textContent="Maydonlar tozalandi.";});
+$("export").addEventListener("click",downloadCsv);$("clear-history").addEventListener("click",()=>{historyRows=[];checksDone=0;renderHistory();updateSummary();});
+$("theme").addEventListener("change",event=>document.body.classList.toggle("light",event.target.value==="light"));
+renderRows();renderChart();renderHistory();updateSummary();
+</script>
+</body></html>
