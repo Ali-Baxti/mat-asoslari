@@ -606,8 +606,8 @@ private:
 
     void updateSummary() {
         const QString text = QString("Jami bajarilgan tekshiruvlar: %1\nOxirgi tekshirilgan son: %2")
-            .arg(totalChecks_)
-            .arg(latestResults_.empty() ? "—" : QString::number(latestNumber_));
+            .arg(QString::number(totalChecks_))
+            .arg(latestResults_.empty() ? QString("—") : QString::number(latestNumber_));
         if (homeSummary_) homeSummary_->setText(text);
         if (reportSummary_) {
             reportSummary_->setText(
