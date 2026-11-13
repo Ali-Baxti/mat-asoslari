@@ -107,3 +107,14 @@ Grafik interfeys bitta katta panelga jamlanmagan. Chap tomondagi navigatsiya orq
 8. **Dastur haqida** — loyiha maqsadi va texnologiyalar.
 
 Tarix hozircha faqat dastur ochiq turgan sessiya davomida saqlanadi; dastur yopilganda tozalanadi. CSV eksport oxirgi bajarilgan tekshiruv natijalarini saqlaydi.
+
+## Brauzerda sinash (GitHub Pages)
+
+Windows Qt 6 desktop dasturidan tashqari, web/ papkasida mustaqil brauzer demo ham mavjud.
+
+- Sayt manzili: https://ali-baxti.github.io/mat-asoslari/
+- Kod: web/index.html
+- Deploy workflow: .github/workflows/pages.yml
+- Ishga tushirish: main branch'ga web/ yoki Pages workflow o'zgarganda GitHub Actions avtomatik deploy qiladi.
+
+Brauzer demo 5 ta algoritmni, natijalar jadvalini, median vaqt diagrammasini, sessiya tarixini va CSV eksportni qo'llaydi. U C++/Qt dasturidan alohida JavaScript BigInt implementatsiyasi; brauzerdagi vaqt o'lchovlarini Windows dasturi bilan bevosita taqqoslamang. Birinchi deploy tugashi uchun GitHub Actions ishini kuting. Repository Settings -> Pages bo'limida Source sifatida GitHub Actions tanlangan bo'lishi kerak.
